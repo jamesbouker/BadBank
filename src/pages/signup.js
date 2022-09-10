@@ -18,6 +18,14 @@ export default function Signup() {
   const { addUser } = useUserContext();
 
   function validate(field, label) {
+    if (field === "password" && label.length < 8) {
+      setErrors((prev) => {
+        let temp = { ...prev };
+        temp[field] = true;
+        return temp;
+      });
+      return false;
+    }
     if (label.length === 0) {
       setErrors((prev) => {
         let temp = { ...prev };
@@ -26,6 +34,11 @@ export default function Signup() {
       });
       return false;
     }
+    setErrors((prev) => {
+      let temp = { ...prev };
+      temp[field] = false;
+      return temp;
+    });
     return true;
   }
 
@@ -58,6 +71,9 @@ export default function Signup() {
       password: false,
     });
   }
+
+  const nothingEntered =
+    name.length === 0 && password.length === 0 && email.length === 0;
 
   return (
     <>
@@ -106,9 +122,15 @@ export default function Signup() {
                 placeholder="Enter a password"
               />
               {errors.password && (
-                <p style={{ color: "red" }}>Enter your password</p>
+                <p style={{ color: "red" }}>
+                  Enter a password, 8 or more characters
+                </p>
               )}
-              <Button style={{ marginTop: "1rem" }} onClick={handleSignup}>
+              <Button
+                disabled={nothingEntered}
+                style={{ marginTop: "1rem" }}
+                onClick={handleSignup}
+              >
                 Create Account
               </Button>
             </>

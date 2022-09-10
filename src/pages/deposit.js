@@ -35,6 +35,7 @@ export default function Deposit() {
                 {error && <p style={{ color: "red" }}>{error}</p>}
               </div>
               <Button
+                disabled={depositAmount.length === 0}
                 onClick={() => {
                   let value = parseFloat(depositAmount);
                   if (isNaN(value)) {

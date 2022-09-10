@@ -35,6 +35,7 @@ export default function Withdraw() {
                 {error && <p style={{ color: "red" }}>{error}</p>}
               </div>
               <Button
+                disabled={withdrawAmount.length === 0}
                 onClick={() => {
                   let value = parseFloat(withdrawAmount);
                   if (isNaN(value)) {
